@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizonte Roleplay</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+    --azul:#006fa3;
+    --azul-claro:#159bd1;
+    --azul-brilho:#35c8ff;
+    --azul-escuro:#02151e;
+    --preto:#02080c;
+    --branco:#fff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    cursor:default;
+    user-select:none;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    background:var(--preto);
+    color:var(--branco);
+    overflow-x:hidden;
+}
+
+a,button{
+    cursor:pointer;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+/* FUNDO */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(0,111,163,.20),transparent 35%),
+        radial-gradient(circle at 15% 80%,rgba(21,155,209,.08),transparent 30%),
+        radial-gradient(circle at 85% 70%,rgba(53,200,255,.06),transparent 30%);
+    z-index:-2;
+}
+
+/* NAVBAR */
+nav{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    background:rgba(2,8,12,.72);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid rgba(53,200,255,.12);
+    z-index:1000;
+}
+
+.nav-logo{
+    font-weight:900;
+    letter-spacing:3px;
+    font-size:18px;
+}
+
+.nav-logo span{
+    color:var(--azul-brilho);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:38px;
+    height:76px;
+    margin-left:auto;
+    margin-right:28px;
+}
+
+.nav-links a{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    height:76px;
+    padding:0 2px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    opacity:.78;
+    transition:color .3s ease, opacity .3s ease;
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:20px;
+    height:2px;
+    border-radius:2px;
+    background:var(--azul-brilho);
+    transform:scaleX(0);
+    transform-origin:center;
+    transition:transform .3s ease;
+    box-shadow:0 0 10px rgba(53,200,255,.55);
+}
+
+.nav-links a:hover{
+    opacity:1;
+    color:var(--azul-brilho);
+}
+
+.nav-links a:hover::after{
+    transform:scaleX(1);
+}
+
+.discord-btn{
+    min-width:112px;
+    height:40px;
+    padding:0 20px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(53,200,255,.6);
+    background:rgba(0,111,163,.2);
+    border-radius:8px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1px;
+    transition:.3s;
+}
+
+.discord-btn:hover{
+    background:var(--azul);
+    box-shadow:0 0 25px rgba(53,200,255,.35);
+}
+
+/* HERO */
+.hero{
+    min-height:100vh;
+    padding:125px 20px 80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero-content{
+    width:100%;
+    max-width:1100px;
+    position:relative;
+    z-index:2;
+}
+
+/* ÍCONE */
+.logo-hero{
+    width:220px;
+    height:220px;
+    margin:0 auto 25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation:logoFloat 5s ease-in-out infinite;
+    transition:transform .15s ease-out;
+}
+
+.logo-frame{
+    width:200px;
+    height:200px;
+    overflow:hidden;
+    border-radius:30px;
+    border:2px solid rgba(53,200,255,.72);
+    background:#006fa3;
+    box-shadow:
+        0 0 18px rgba(21,155,209,.65),
+        0 0 55px rgba(0,111,163,.32),
+        inset 0 0 35px rgba(53,200,255,.10);
+    position:relative;
+}
+
+.logo-frame::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:28px;
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.10),
+        transparent 35%,
+        transparent 70%,
+        rgba(0,0,0,.15)
+    );
+    pointer-events:none;
+}
+
+.logo-frame img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    border-radius:28px;
+    transition:.4s ease;
+}
+
+.logo-frame:hover img{
+    transform:scale(1.04);
+}
+
+@keyframes logoFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+
+/* TÍTULO */
+.hero h1{
+    font-size:clamp(55px,10vw,125px);
+    line-height:.82;
+    font-weight:900;
+    letter-spacing:-5px;
+    text-transform:uppercase;
+    text-shadow:
+        0 0 25px rgba(53,200,255,.15),
+        0 10px 40px rgba(0,0,0,.6);
+}
+
+.hero h1 span{
+    display:block;
+    color:var(--azul-brilho);
+}
+
+.hero-sub{
+    margin:28px auto 0;
+    max-width:650px;
+    font-size:14px;
+    line-height:1.8;
+    color:rgba(255,255,255,.58);
+    letter-spacing:1px;
+}
+
+.hero-buttons{
+    margin-top:34px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.hero-btn{
+    padding:15px 27px;
+    border-radius:7px;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    border:1px solid rgba(53,200,255,.55);
+    transition:.3s;
+}
+
+.hero-btn.primary{
+    background:var(--azul);
+}
+
+.hero-btn.secondary{
+    background:rgba(255,255,255,.03);
+}
+
+.hero-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(0,111,163,.35);
+}
+
+/* GRID */
+.grid-floor{
+    position:absolute;
+    bottom:-190px;
+    left:-20%;
+    width:140%;
+    height:430px;
+    opacity:.25;
+    transform:perspective(500px) rotateX(60deg);
+    background-image:
+        linear-gradient(rgba(53,200,255,.35) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(53,200,255,.35) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to top,black,transparent);
+}
+
+/* PARTÍCULAS */
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:var(--azul-brilho);
+    border-radius:50%;
+    box-shadow:0 0 8px var(--azul-brilho);
+    opacity:.55;
+    animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+    from{transform:translateY(30px);opacity:0}
+    30%{opacity:.65}
+    70%{opacity:.4}
+    to{transform:translateY(-140px);opacity:0}
+}
+
+/* SEÇÕES */
+section{
+    position:relative;
+    padding:120px 7%;
+}
+
+.section-label{
+    color:var(--azul-brilho);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:3px;
+    margin-bottom:18px;
+}
+
+.section-title{
+    font-size:clamp(38px,6vw,72px);
+    font-weight:900;
+    line-height:.95;
+    letter-spacing:-3px;
+    text-transform:uppercase;
+}
+
+.section-title span{
+    color:var(--azul-claro);
+}
+
+.cards{
+    margin-top:65px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.card{
+    min-height:290px;
+    padding:35px;
+    background:linear-gradient(145deg,rgba(0,111,163,.15),rgba(255,255,255,.015));
+    border:1px solid rgba(53,200,255,.13);
+    border-radius:14px;
+    position:relative;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    width:180px;
+    height:180px;
+    right:-80px;
+    bottom:-80px;
+    background:rgba(53,200,255,.12);
+    filter:blur(30px);
+    border-radius:50%;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(53,200,255,.45);
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+
+.card-number{
+    font-size:12px;
+    color:var(--azul-brilho);
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.card h3{
+    margin-top:75px;
+    font-size:27px;
+    font-weight:900;
+    letter-spacing:-1px;
+}
+
+.card p{
+    margin-top:12px;
+    color:rgba(255,255,255,.5);
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* CTA */
+.cta{
+    text-align:center;
+    padding:150px 20px;
+    background:
+        radial-gradient(circle at center,rgba(0,111,163,.22),transparent 60%);
+}
+
+.cta h2{
+    font-size:clamp(45px,8vw,95px);
+    line-height:.9;
+    font-weight:900;
+    letter-spacing:-4px;
+    text-transform:uppercase;
+}
+
+.cta h2 span{
+    color:var(--azul-brilho);
+}
+
+.cta p{
+    margin:25px auto 30px;
+    color:rgba(255,255,255,.5);
+    max-width:560px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+/* FOOTER */
+footer{
+    padding:35px 7%;
+    border-top:1px solid rgba(53,200,255,.1);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:rgba(255,255,255,.35);
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+/* REVEAL */
+.reveal{
+    opacity:0;
+    transform:translateY(55px);
+    transition:
+        opacity .8s ease,
+        transform .8s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.reveal.hide{
+    opacity:0;
+    transform:translateY(55px);
+}
+
+/* MOBILE */
+@media(max-width:800px){
+    nav{
+        padding:0 20px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .discord-btn{
+        min-width:100px;
+        height:38px;
+        padding:0 15px;
+    }
+
+    .logo-frame{
+        width:165px;
+        height:165px;
+        border-radius:24px;
+    }
+
+    .logo-frame img{
+        border-radius:22px;
+    }
+
+    .logo-hero{
+        width:185px;
+        height:185px;
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    section{
+        padding:90px 25px;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:12px;
+        text-align:center;
+    }
+}
+
+@media(max-width:450px){
+    .hero{
+        padding-top:110px;
+    }
+
+    .hero h1{
+        font-size:52px;
+    }
+
+    .hero-sub{
+        font-size:12px;
+    }
+
+    .hero-btn{
+        width:100%;
+        max-width:280px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="#inicio" class="nav-logo">HORIZONTE <span>RP</span></a>
+
+    <div class="nav-links">
+        <a href="#inicio">INÍCIO</a>
+        <a href="#servidor">SERVIDOR</a>
+        <a href="#experiencia">EXPERIÊNCIA</a>
+    </div>
+
+    <a href="https://discord.gg/Dxh6dY73Y" target="_blank" class="discord-btn">
+        DISCORD
+    </a>
+</nav>
+
+<main>
+
+<section class="hero" id="inicio">
+    <div class="hero-content">
+
+        <div class="logo-hero" id="logoHero">
+            <div class="logo-frame">
+                <img
+                    src="https://cdn.discordapp.com/icons/1545897605077405888/6da2aa69b1b33ca477add15a30fe12ca.webp?size=512"
+                    alt="Horizonte Roleplay">
+            </div>
+        </div>
+
+        <h1>
+            HORIZONTE
+            <span>ROLEPLAY</span>
+        </h1>
+
+        <p class="hero-sub">
+            UMA NOVA HISTÓRIA COMEÇA AQUI.
+            CRIE SEU PERSONAGEM, FAÇA SUAS ESCOLHAS
+            E CONSTRUA SEU PRÓPRIO CAMINHO.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="https://discord.gg/Dxh6dY73Y" target="_blank" class="hero-btn primary">
+                ENTRAR NO DISCORD
+            </a>
+
+            <a href="#servidor" class="hero-btn secondary">
+                CONHECER O SERVIDOR
+            </a>
+        </div>
+
+    </div>
+
+    <div class="grid-floor"></div>
+    <div id="particles"></div>
+</section>
+
+<section id="servidor" class="reveal">
+    <div class="section-label">01 — HORIZONTE</div>
+
+    <h2 class="section-title">
+        VIVA.<br>
+        <span>ESCOLHA.</span><br>
+        DOMINE.
+    </h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-number">01 / ROLEPLAY</div>
+            <h3>ROLEPLAY</h3>
+            <p>
+                Viva uma cidade dinâmica onde cada decisão pode mudar
+                sua história e a história de quem está ao seu redor.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-number">02 / ECONOMIA</div>
+            <h3>ECONOMIA</h3>
+            <p>
+                Trabalhe, empreenda, conquiste propriedades e construa
+                seu patrimônio dentro de uma economia viva.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-number">03 / COMUNIDADE</div>
+            <h3>COMUNIDADE</h3>
+            <p>
+                Conheça pessoas, forme alianças, crie histórias e faça
+                parte de uma comunidade construída pelos jogadores.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section id="experiencia" class="cta reveal">
+    <div class="section-label">02 — SUA HISTÓRIA</div>
+
+    <h2>
+        ENCONTRE<br>
+        <span>SEU LUGAR.</span>
+    </h2>
+
+    <p>
+        O Horizonte Roleplay espera por você.
+        Entre para a comunidade e comece a escrever sua história.
+    </p>
+
+    <a href="https://discord.gg/Dxh6dY73Y" target="_blank" class="hero-btn primary">
+        COMEÇAR AGORA
+    </a>
+</section>
+
+</main>
+
+<footer>
+    <div>© 2026 HORIZONTE ROLEPLAY</div>
+    <div>UMA CIDADE. MILHARES DE HISTÓRIAS.</div>
+</footer>
+
+<script>
+/* PARTÍCULAS */
+const particles = document.getElementById("particles");
+
+for(let i = 0; i < 70; i++){
+    const p = document.createElement("div");
+    p.className = "particle";
+
+    p.style.left = Math.random() * 100 + "%";
+    p.style.top = (25 + Math.random() * 75) + "%";
+    p.style.animationDuration = (3 + Math.random() * 6) + "s";
+    p.style.animationDelay = (Math.random() * 6) + "s";
+
+    particles.appendChild(p);
+}
+
+/* PARALLAX DO LOGO */
+const logo = document.getElementById("logoHero");
+
+document.addEventListener("mousemove", e => {
+    const x = (e.clientX / window.innerWidth - .5) * 10;
+    const y = (e.clientY / window.innerHeight - .5) * 10;
+
+    logo.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+/* REVEAL */
+const reveals = document.querySelectorAll(".reveal");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            // Tocará a animação ao subir/entrar na tela.
+            entry.target.classList.remove("hide");
+            entry.target.classList.add("show");
+        }else{
+            // Reseta a animação ao sair para que ela toque novamente
+            // quando o usuário descer ou subir de volta.
+            entry.target.classList.remove("show");
+            entry.target.classList.add("hide");
+        }
+    });
+},{
+    threshold:.15
+});
+
+reveals.forEach(el => {
+    el.classList.add("hide");
+    observer.observe(el);
+});
+</script>
+
+</body>
+</html>
